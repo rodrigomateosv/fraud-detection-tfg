@@ -1,0 +1,69 @@
+# Detección de Fraude Contable mediante Machine Learning
+
+Trabajo de Fin de Grado — Grado en Ingeniería Matemática
+Universidad CEU San Pablo
+
+**Autor:** Rodrigo Mateos
+
+
+## Descripción
+
+Este proyecto evalúa empíricamente si las *features* derivadas del marco
+*Financial Shenanigans* de Schilit (2018) aportan poder predictivo incremental
+sobre las 28 variables contables crudas de Compustat empleadas por Bao et al.
+(2020) para la detección de fraude contable en empresas cotizadas estadounidenses.
+
+Se operacionalizan diez *features* expertas y se comparan dos configuraciones
+(28 variables crudas frente a 28 + 10 derivadas) sobre dos modelos (XGBoost y
+RUSBoost) en un diseño experimental 2×2, con interpretabilidad mediante SHAP.
+
+## Estructura del repositorio
+
+
+fraud-detection-tfg/
+├── src/            # Código fuente (features.py, modelos, utilidades)
+├── notebooks/      # Notebooks de análisis (01_eda.ipynb, etc.)
+├── figures/        # Figuras generadas (curvas ROC/PR, gráficos SHAP)
+├── results/        # Métricas y salidas de los experimentos
+└── data/           # Datos (no incluidos en el repositorio; ver más abajo)
+
+
+## Datos
+
+Los archivos de datos no se incluyen en el repositorio por su tamaño.
+
+- **`data_FraudDetection_JAR2020.csv`**: dataset base público, disponible en el
+  repositorio [JarFraud/FraudDetection](https://github.com/JarFraud/FraudDetection).
+- **`data_with_schilit.csv`**: se genera ejecutando `src/features.py` sobre el
+  dataset base.
+
+Descarga el dataset base, colócalo en la carpeta `data/` y ejecuta el pipeline
+de *feature engineering* para regenerar el resto.
+
+## Requisitos e instalación
+
+```bash
+python -m venv venv
+venv\Scripts\activate        # En Windows
+pip install -r requirements.txt
+```
+
+## Reproducción de los resultados
+
+1. Colocar `data_FraudDetection_JAR2020.csv` en `data/`.
+2. Ejecutar `src/features.py` para generar las *features* de Schilit.
+3. Ejecutar los notebooks de `notebooks/` en orden para el análisis
+   exploratorio, el entrenamiento de los modelos y el análisis SHAP.
+
+## Modelos y métricas
+
+- **Modelos:** XGBoost y RUSBoost (vía `BalancedBaggingClassifier`).
+- **Métricas:** AUC-ROC y PR-AUC, bajo partición temporal estricta con
+  tratamiento del fraude serial.
+- **Interpretabilidad:** valores SHAP (global y local).
+
+## Referencias principales
+
+- Bao, Y. et al. (2020). *Detecting Accounting Fraud in Publicly Traded U.S.
+  Firms Using a Machine Learning Approach*. Journal of Accounting Research.
+- Schilit, H. et al. (2018). *Financial Shenanigans* (4.ª ed.).

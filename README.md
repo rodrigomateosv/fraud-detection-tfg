@@ -1,7 +1,7 @@
 # Detección de Fraude Contable mediante Machine Learning
 
 Trabajo de Fin de Grado — Grado en Ingeniería Matemática
-Universidad CEU San Pablo
+
 
 **Autor:** Rodrigo Mateos
 
